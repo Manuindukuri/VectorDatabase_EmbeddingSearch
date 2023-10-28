@@ -5,6 +5,8 @@ asyncpg==0.28.0
 blinker==1.6.2
 blis==0.7.11
 bcrypt==4.0.1
+blinker==1.6.2
+blis==0.7.11
 cachetools==5.3.1
 catalogue==2.0.10
 click==8.1.7
