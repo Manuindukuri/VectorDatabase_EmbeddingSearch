@@ -3,4 +3,5 @@ Welcome to our custom built application to explore vector databses for efficient
 
 # Requirements to run
 - Postgres - 14
-- 'users' database and 'usera' table
+- 'users' database and 'users' table with 'password' as password
+- Unable CRUD operations for the database
