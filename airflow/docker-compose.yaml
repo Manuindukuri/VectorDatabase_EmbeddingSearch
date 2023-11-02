@@ -73,7 +73,7 @@ x-airflow-common:
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pypdf streamlit openai pandas boto3 pinecone-client}
     AIRFLOW__CORE__ENABLE_XCOM_PICKLING: 'true'
-  volumes: 
+  volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
@@ -299,5 +299,3 @@ services:
 
 volumes:
   postgres-db-volume:
-
-  
