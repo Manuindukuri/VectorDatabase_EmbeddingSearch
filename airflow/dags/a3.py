@@ -37,8 +37,11 @@ def generate_pypdf_embeddings_and_save_to_s3(**kwargs):
     if not embeddings_pypdf.empty:
         # Create a DataFrame with the embeddings for 'pypdf_content'
         df_pypdf = pd.DataFrame({'embeddings': embeddings_pypdf})
-        # Concatenate the headings column with the embeddings column
-        df_final = pd.concat([df['heading'], df_pypdf], axis=1)
+
+        df_pypdf.rename(columns={'embeddings': 'embeddings'}, inplace=True)
+
+        # Concatenate the 'heading', 'pypdf_content', and 'content' columns
+        df_final = pd.concat([df['heading'], df['pypdf_content'], df_pypdf], axis=1)
 
         # Convert DataFrame to CSV content as bytes
         csv_content = df_final.to_csv(index=False).encode('utf-8')
