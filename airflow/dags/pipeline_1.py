@@ -61,8 +61,12 @@ if __name__ == "__main__":
         # Create a DataFrame with the embeddings
         df_pypdf = pd.DataFrame({'embeddings': embeddings_pypdf})
 
+        df_pypdf.rename(columns={'embeddings': 'embeddings'}, inplace=True)
+
+        df_final = pd.concat([df['pypdf_content'], df_pypdf], axis=1)
+
         # Convert DataFrame to CSV content as bytes
-        csv_content = df_pypdf.to_csv(index=False).encode('utf-8')
+        csv_content = df_final.to_csv(index=False).encode('utf-8')
 
         # Save the embeddings for 'pypdf_content' to S3
         s3.put_object(Bucket=s3_bucket_name, Key='pypdf_embeddings.csv', Body=csv_content)
