@@ -1,5 +1,5 @@
 # Assignment-3
-=======
+
 # OPEN AI CHATBOT
 
 OPEN AI CHATBOT is a comprehensive project that combines two distinct pipelines for data acquisition and embedding generation using Apache Airflow and a client-facing application built with Streamlit and FastAPI. The project addresses a real-world scenario where we extract data and metadata from PDF files and store them in Pinecone, a vector database for efficient embedding search to prompt in large language model. The project answers to the question asked by the user using the GPT-3.5 Turbo model.
@@ -155,3 +155,10 @@ To run this project, you will need:
 ### ATTESTATION:
 WE ATTEST THAT WE HAVEN’T USED ANY OTHER STUDENTS’ WORK IN OUR ASSIGNMENT AND ABIDE BY THE POLICIES LISTED IN THE STUDENT HANDBOOK.
 
+=======
+Welcome to our custom built application to explore vector databses for efficient embedding search to prompt in large language model.
+
+# Requirements to run
+- Postgres - 14
+- 'users' database and 'users' table with 'password' as password
+- Unable CRUD operations for the database

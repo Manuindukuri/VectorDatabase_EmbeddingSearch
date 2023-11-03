@@ -49,6 +49,7 @@ def connect_to_pinecone():
 
 
 
+
 def upsert_data_to_pinecone(**kwargs):
     global index
     ti = kwargs["ti"]

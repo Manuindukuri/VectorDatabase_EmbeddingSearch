@@ -1,28 +1,13 @@
 import streamlit as st
 import pandas as pd
-import openai
-
-# Set your OpenAI API key here
-api_key = "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"
-
-# Initialize OpenAI with your API key
-openai.api_key = api_key
+import requests
 
 # Load the CSV file containing form information
-df = pd.read_csv('/Users/prathamesh/Desktop/Github/Assignment-3/notebooks/summary1.csv')
-
-def generate_embeddings(text_content):
-    # Define your text-embedding model
-    embedding_model = "text-embedding-ada-002"
-
-    # Generate embeddings using OpenAI API
-    response = openai.Embedding.create(model=embedding_model, input=text_content)
-
-    return response['data'][0]['embedding']
+df = pd.read_csv('notebooks/summary1.csv')
 
 def questionnaire_login():
     st.title("Open AI Chatbot")
-    options = ["", "EXAMINATION BROCHURE", "APPLICATION FOR REGISTRATION OR EXEMPTION  FORM 1", "ELIGIBILITY REQUIREMENTS FOR FORM 1A", "NOTIFICATION UNDER REGULATION E", "ANNUAL REPORTS AND SPECIAL FINANCIAL REPORTS", "FORM 1N AND AMENDMENTS FOR NOTICE OF REGISTRATION", "SEMIANNUAL REPORT PURSUANT TO REGULATION A", "CURRENT REPORT PURSUANT TO REGULATION A"]
+    options = ["", "Examination Brochure", "Application for registration or exemption from registration as a national securities exchange Form 1", "Regulation A Offering Statement", "Notification under Regulation E", "Annual Reports and Special Financial Reports", "Form and amendments for notice of registration as a national securities exchange for the sole purpose of trading security futures products", "Semiannual Report or Special Financial Report Pursuant to Regulation A", "Current Report Pursuant to Regulation A", "Exit Report Under Regulation A", "General form for registration of securities pursuant to Section 12(b) or (g)"]
     selected_option = st.selectbox("Select a SEC Government Website form", options)
 
     if selected_option:
@@ -51,12 +36,6 @@ def questionnaire_login():
                 if form_index is not None:
                     st.info(f"You selected {selected_option} with the PyPdf library. Here's a summary:")
                     st.write(df.loc[df['Index'] == form_index]['content'].values[0])
-                    
-                    # Generate embeddings for the selected content
-                    selected_content = df.loc[df['Index'] == form_index]['content'].values[0]
-                    embeddings = generate_embeddings(selected_content)
-                    st.write("Embeddings:", embeddings)
-
                 else:
                     st.warning("Please select a valid option with the PyPdf library.")
 
@@ -79,14 +58,16 @@ def questionnaire_login():
                 if form_index is not None:
                     st.info(f"You selected {selected_option} with the Nougat library. Here's a summary:")
                     st.write(df.loc[df['Index'] == form_index]['nougat_content'].values[0])
-
-                    # Generate embeddings for the selected content
-                    selected_content = df.loc[df['Index'] == form_index]['nougat_content'].values[0]
-                    embeddings = generate_embeddings(selected_content)
-                    st.write("Embeddings:", embeddings)
-
                 else:
                     st.warning("Please select a valid option with the Nougat library.")
 
-if __name__ == "__main__":
-    questionnaire_login()
+# If the user is authenticated, they can access protected data
+if "access_token" in st.session_state:
+    access_token = st.session_state.access_token
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = requests.get("http://localhost:8000/protected", headers=headers)
+    if response.status_code == 200:
+        authenticated_user = response.json()
+        questionnaire_login() 
+else:
+    st.text("Please login/register to access the Application.")
