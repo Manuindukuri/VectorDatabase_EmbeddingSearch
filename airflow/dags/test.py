@@ -46,7 +46,7 @@ def connect_to_pinecone():
     pinecone.create_index(name=index_name, dimension=1536)
     index = pinecone.Index(index_name=index_name) 
     time.sleep(10)
-    
+
 
 
 
