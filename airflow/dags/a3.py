@@ -5,7 +5,17 @@ import os
 import pandas as pd
 import boto3
 from io import BytesIO
-from pipeline_1 import generate_embeddings, aws_access_key_id, aws_secret_access_key, s3_bucket_name  # Import the generate_embeddings function
+from dotenv import load_dotenv
+from pipeline_1 import generate_embeddings
+# aws_access_key_id, aws_secret_access_key, s3_bucket_name   # Import the generate_embeddings function
+from airflow.models import Variable
+
+api_key = os.getenv('AIRFLOW_VAR_OPENAI_API_KEY')
+
+# Set your S3 credentials
+aws_access_key_id = os.getenv('AIRFLOW_VAR_AWS_ACCESS_KEY')
+aws_secret_access_key = os.getenv('AIRFLOW_VAR_AWS_SECRET_KEY')
+s3_bucket_name = os.getenv('AIRFLOW_VAR_S3_BUCKET_NAME')
 
 # Define your default_args for the DAG
 default_args = {
@@ -14,11 +24,12 @@ default_args = {
 }
 
 # Initialize the DAG
-dag = DAG('openai_chatbot_dag', default_args=default_args, schedule_interval=None)
+dag = DAG('pipeline_1', default_args=default_args, schedule_interval=None)
 
 # Define a function to generate embeddings and save to S3 for 'pypdf_content'
 def generate_pypdf_embeddings_and_save_to_s3(**kwargs):
     # Construct the path to the CSV file
+    print(Variable.get("aws_access_key"))
     current_directory = os.path.dirname(os.path.abspath(__file__ or '.'))
     csv_file_path = os.path.join(current_directory, 'cleaned_file.csv')
 

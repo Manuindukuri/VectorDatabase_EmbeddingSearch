@@ -17,7 +17,7 @@ Sarvesh Malpani | 002776061 | 33.33%
 ## Please Use these applications judiciously as we are running low on Free Credits, Deal ? 
 - Streamlit Application - 
 - Airflow - 
-- Codelabs - 
+- Codelabs - https://codelabs-preview.appspot.com/?file_id=1D1rhMETWEnWB5HbrnLXo8uqPDJzaF3ZHa6dsZ0P6OKA#8
 - Demo of application - 
 
 # Project Tree

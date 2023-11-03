@@ -1,7 +1,8 @@
-MY_EMAIL= Your email id
+AIRFLOW_UID=Your Airflow UID
+MY_EMAIL=Your email id
 APP_PASSWORD=Your app password
-AWS_ACCESS_KEY="Your aws_acess_key"
-AWS_SECRET_KEY="Your aws_secret key"
-S3_BUCKET_NAME="Your s3 bucket name"
-OPENAI_API_KEY="Your open_api key"
-PINECONE_API_KEY="Your pinecone_api key"
+AIRFLOW_VAR_AWS_ACCESS_KEY="Your aws access key"
+AIRFLOW_VAR_AWS_SECRET_KEY="Your aws secret key"
+AIRFLOW_VAR_S3_BUCKET_NAME="Your s3 bucket name"
+AIRFLOW_VAR_OPENAI_API_KEY="Your Open AI API key"
+AIRFLOW_VAR_PINECONE_API_KEY="Your Pinecone API key"

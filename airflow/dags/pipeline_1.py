@@ -3,14 +3,17 @@ import openai
 import os
 import boto3
 from io import StringIO
+from dotenv import load_dotenv 
+
+load_dotenv()
 
 # Set your OpenAI API key here
-api_key = "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"
+api_key = os.getenv('AIRFLOW_VAR_OPENAI_API_KEY')
 
 # Set your S3 credentials
-aws_access_key_id = "AKIAQE5K2OLW7ZD2RDRI"
-aws_secret_access_key = "oVeXeXBZ+T14n2Naw7v3IrDOi24iRJ4Gyppal24p"
-s3_bucket_name = "a3-damg"
+aws_access_key_id = os.getenv('AIRFLOW_VAR_AWS_ACCESS_KEY')
+aws_secret_access_key = os.getenv('AIRFLOW_VAR_AWS_SECRET_KEY')
+s3_bucket_name = os.getenv('AIRFLOW_VAR_S3_BUCKET_NAME')
 
 openai.api_key = api_key
 

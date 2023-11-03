@@ -11,13 +11,24 @@ import time
 global index
 import io
 import boto3
+from dotenv import load_dotenv 
+
+load_dotenv()
+
+api_key = os.getenv('AIRFLOW_VAR_OPENAI_API_KEY')
+
+# Set your S3 credentials
+aws_access_key_id = os.getenv('AIRFLOW_VAR_AWS_ACCESS_KEY')
+aws_secret_access_key = os.getenv('AIRFLOW_VAR_AWS_SECRET_KEY')
+s3_bucket_name = os.getenv('AIRFLOW_VAR_S3_BUCKET_NAME')
+pine_api_key = os.getenv('AIRFLOW_VAR_PINECONE_API_KEY')
 
 def csv_to_dataframe():
 # Get the current working directory (where the DAG file is located)
-    s3 = boto3.client('s3', aws_access_key_id="AKIAQE5K2OLW7ZD2RDRI", aws_secret_access_key="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")
+    s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
     # Specify the S3 bucket and object key for your CSV file
-    bucket_name = 'a3-damg'
+    bucket_name = s3_bucket_name
     object_key = 'embeddings.csv'
 
     # Download the CSV file from S3
@@ -37,7 +48,7 @@ def csv_to_dataframe():
 def connect_to_pinecone():
     index_name = 'my-index'
     # Initialize Pinecone client
-    pinecone.init(api_key='b4337a10-efc0-4747-8b3c-5469b1485320',      
+    pinecone.init(api_key=pine_api_key,      
     environment='gcp-starter')   
     # Check whether the index with the same name already exists - if so, delete it
     if index_name in pinecone.list_indexes():
@@ -53,7 +64,7 @@ def upsert_data_to_pinecone(**kwargs):
     global index
     ti = kwargs["ti"]
     df = ti.xcom_pull(task_ids="csv_to_dataframe_task")
-    pinecone.init(api_key='b4337a10-efc0-4747-8b3c-5469b1485320',      
+    pinecone.init(api_key=pine_api_key,      
     environment='gcp-starter')    
     index = pinecone.Index(index_name="my-index") 
     for _, row in df.iterrows():
@@ -73,14 +84,14 @@ def upsert_data_to_pinecone(**kwargs):
 
 def validation():
     time.sleep(10)
-    pinecone.init(api_key='b4337a10-efc0-4747-8b3c-5469b1485320',environment='gcp-starter')    
+    pinecone.init(api_key=pine_api_key,environment='gcp-starter')    
     index = pinecone.Index(index_name="my-index") 
     stats=index.describe_index_stats()
     print(f"Stats are : {stats}")
 
 
 dag= DAG(
-    dag_id= "v07",
+    dag_id= "pipeline_2",
     schedule= "0 0 * * *",
     start_date=days_ago(0),
     dagrun_timeout= timedelta(minutes=60),

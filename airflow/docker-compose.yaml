@@ -64,6 +64,7 @@ x-airflow-common:
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
+    AIRFLOW_VAR_TEST: "hello"
     # yamllint disable rule:line-length
     # Use simple http server on scheduler for health checks
     # See https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/logging-monitoring/check-health.html#scheduler-health-check-server
@@ -72,10 +73,11 @@ x-airflow-common:
     # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pypdf streamlit openai pandas boto3 pinecone-client}
-    AIRFLOW_LOGGING_REMOTE_LOGGING: "True"
-    AIRFLOW_LOGGING_REMOTE_BASE_LOG_FOLDER: "s3://a3-logs"
-    AIRFLOW_LOGGING_REMOTE_LOG_CONN_ID: assignment_3
-    AIRFLOW_LOGGING_ENCRYPT_S3_LOGS: "False"
+    # AIRFLOW_LOGGING_REMOTE_LOGGING: "True"
+    # AIRFLOW_LOGGING_REMOTE_BASE_LOG_FOLDER: "s3://a3-logs/path/to/log/folder"
+    # AIRFLOW_LOGGING_REMOTE_LOG_CONN_ID: assignment_3
+    # AIRFLOW_LOGGING_ENCRYPT_S3_LOGS: "False"
+
     # aws_access_key_id: ${AWS_ACCESS_KEY}
     # aws_secret_access_key: ${AWS_SECRET_KEY}
     # s3_bucket_name: ${S3_BUCKET_NAME}
@@ -84,6 +86,9 @@ x-airflow-common:
 
     
     AIRFLOW__CORE__ENABLE_XCOM_PICKLING: 'true'
+  
+  env_file:
+    - ./.env
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
