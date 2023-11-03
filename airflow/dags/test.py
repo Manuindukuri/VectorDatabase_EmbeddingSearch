@@ -9,13 +9,24 @@ import pinecone
 import os
 import time
 global index
+import io
+import boto3
 
 
 def csv_to_dataframe():
 # Get the current working directory (where the DAG file is located)
-    current_directory = os.path.dirname(os.path.abspath(__file__ or '.'))
-    csv_file_path = os.path.join(current_directory, "embeddings.csv")
-    df = pd.read_csv(csv_file_path)
+    s3 = boto3.client('s3', aws_access_key_id='AKIAQE5K2OLWTAPLD7MW', aws_secret_access_key='LhPFBtSo0kE7BSPDNK9Uy+ZkfSUp5glx+ulKY906')
+
+    # Specify the S3 bucket and object key for your CSV file
+    bucket_name = 'airflow-a3'
+    object_key = 'embeddings.csv'
+
+    # Download the CSV file from S3
+    response = s3.get_object(Bucket=bucket_name, Key=object_key)
+    csv_data = response['Body'].read()
+
+    # Create a DataFrame from the CSV data
+    df = pd.read_csv(io.BytesIO(csv_data))
     df.insert(0, 'id', range(1, len(df) + 1))
     df['id'] = df['id'].apply(str)
     df['embeddings'] = df['embeddings'].apply(literal_eval)
