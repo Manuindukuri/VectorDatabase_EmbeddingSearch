@@ -12,13 +12,12 @@ global index
 import io
 import boto3
 
-
 def csv_to_dataframe():
 # Get the current working directory (where the DAG file is located)
-    s3 = boto3.client('s3', aws_access_key_id='AKIAQE5K2OLWTAPLD7MW', aws_secret_access_key='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')
+    s3 = boto3.client('s3', aws_access_key_id="AKIAQE5K2OLW7ZD2RDRI", aws_secret_access_key="oVeXeXBZ+T14n2Naw7v3IrDOi24iRJ4Gyppal24p")
 
     # Specify the S3 bucket and object key for your CSV file
-    bucket_name = 'airflow-a3'
+    bucket_name = 'a3-damg'
     object_key = 'embeddings.csv'
 
     # Download the CSV file from S3

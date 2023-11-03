@@ -5,17 +5,17 @@ import boto3
 from io import StringIO
 
 # Set your OpenAI API key here
-api_key = "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"
+api_key = "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"
 
 # Set your S3 credentials
-aws_access_key_id = "AKIAQE5K2OLWTAPLD7MW"
-aws_secret_access_key = "LhPFBtSo0kE7BSPDNK9Uy+ZkfSUp5glx+ulKY906"
-s3_bucket_name = "airflow-a3"
+aws_access_key_id = "AKIAQE5K2OLW7ZD2RDRI"
+aws_secret_access_key = "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"
+s3_bucket_name = "a3-damg"
 
 openai.api_key = api_key
 
 # Initialize S3 client
-s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+s3 = boto3.client('s3', aws_access_key_id = aws_access_key_id, aws_secret_access_key = aws_secret_access_key)
 
 # Load the CSV file containing form information
 def read_csv_file():

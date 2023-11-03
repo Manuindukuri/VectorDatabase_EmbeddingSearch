@@ -25,8 +25,6 @@ def generate_pypdf_embeddings_and_save_to_s3(**kwargs):
     # Read the CSV file
     df = pd.read_csv(csv_file_path)
 
-    # Generate embeddings for 'pypdf_content'
-    # Generate embeddings for 'pypdf_content'
     embeddings_pypdf = df['pypdf_content'].apply(lambda x: generate_embeddings(x) if x else None)
 
 
@@ -48,7 +46,7 @@ def generate_pypdf_embeddings_and_save_to_s3(**kwargs):
 
         # Upload the embeddings for 'pypdf_content' to S3
         s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-        s3.put_object(Bucket='airflow-a3', Key='embeddings.csv', Body=csv_content)
+        s3.put_object(Bucket='a3-damg', Key='embeddings.csv', Body=csv_content)
     else:
         print("No valid embeddings for 'pypdf_content' to save.")
 
