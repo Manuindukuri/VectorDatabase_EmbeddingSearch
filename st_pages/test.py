@@ -22,7 +22,7 @@ def generate_embeddings(text_content):
 
 def questionnaire_login():
     st.title("Open AI Chatbot")
-    options = ["", "Examination Brochure", "Application for registration or exemption from registration as a national securities exchange Form 1", "Regulation A Offering Statement", "Notification under Regulation E", "Annual Reports and Special Financial Reports", "Form and amendments for notice of registration as a national securities exchange for the sole purpose of trading security futures products", "Semiannual Report or Special Financial Report Pursuant to Regulation A", "Current Report Pursuant to Regulation A", "Exit Report Under Regulation A", "General form for registration of securities pursuant to Section 12(b) or (g)"]
+    options = ["", "EXAMINATION BROCHURE", "APPLICATION FOR REGISTRATION OR EXEMPTION  FORM 1", "ELIGIBILITY REQUIREMENTS FOR FORM 1A", "NOTIFICATION UNDER REGULATION E", "ANNUAL REPORTS AND SPECIAL FINANCIAL REPORTS", "FORM 1N AND AMENDMENTS FOR NOTICE OF REGISTRATION", "SEMIANNUAL REPORT PURSUANT TO REGULATION A", "CURRENT REPORT PURSUANT TO REGULATION A"]
     selected_option = st.selectbox("Select a SEC Government Website form", options)
 
     if selected_option:
