@@ -1,0 +1,7 @@
+MY_EMAIL= Your email id
+APP_PASSWORD=Your app password
+AWS_ACCESS_KEY="Your aws_acess_key"
+AWS_SECRET_KEY="Your aws_secret key"
+S3_BUCKET_NAME="Your s3 bucket name"
+OPENAI_API_KEY="Your open_api key"
+PINECONE_API_KEY="Your pinecone_api key"
