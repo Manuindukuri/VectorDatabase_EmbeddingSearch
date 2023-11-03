@@ -7,6 +7,10 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 import os
 from dotenv import load_dotenv
+import random
+from random import randint
+
+otp = random.randint(100000, 999999)
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -51,7 +55,7 @@ def send_registration_email(user_email, username):
         message += f"We believe in positive impact so, a motivational quote before you leave:\n{quote}"
          # Create a message container
         msg = MIMEMultipart()
-        msg['Subject'] = "Developer welcomes you to the community"
+        msg['Subject'] = "A welcome note from developers"
         msg['From'] = my_email
         msg['To'] = user_email
    
