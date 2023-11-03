@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 import random
 from random import randint
 
-otp = random.randint(100000, 999999)
+host_ip_address = os.getenv("HOST_IP_ADDRESS")
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -32,7 +32,7 @@ def registration():
             st.error("All fields are required.")
         else:
             response = requests.post(
-                "http://localhost:8000/register",
+                f"http://{host_ip_address}:8000/register",
                 json={"username": username, "full_name": full_name, "email": email, "password": password},
             )
             if response.status_code == 200:
@@ -62,7 +62,7 @@ def send_registration_email(user_email, username):
         msg.attach(MIMEText(message, 'plain'))
 
         # Attach the image (change the image path)
-        with open('image.jpg', 'rb') as image_file:
+        with open('pages/image.jpg', 'rb') as image_file:
             image = MIMEImage(image_file.read(), _subtype='jpg')
             image.add_header('Content-Disposition', 'attachment', filename='your-image.jpg')
             msg.attach(image)
@@ -71,3 +71,4 @@ def send_registration_email(user_email, username):
 
 if __name__ == "__main__":
     registration()
+    

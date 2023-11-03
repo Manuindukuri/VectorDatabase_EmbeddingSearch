@@ -1,6 +1,13 @@
 import streamlit as st
 import pandas as pd
 import requests
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from the .env file
+load_dotenv()
+
+host_ip_address = os.getenv("HOST_IP_ADDRESS")
 
 # Load the CSV file containing form information
 df = pd.read_csv('pages/Extracts.csv')
@@ -65,7 +72,7 @@ def extracted_content():
 if "access_token" in st.session_state:
     access_token = st.session_state.access_token
     headers = {"Authorization": f"Bearer {access_token}"}
-    response = requests.get("http://localhost:8000/protected", headers=headers)
+    response = requests.get(f"http://{host_ip_address}:8000/protected", headers=headers)
     if response.status_code == 200:
         authenticated_user = response.json()
         extracted_content() 

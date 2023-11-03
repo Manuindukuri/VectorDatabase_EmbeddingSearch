@@ -1,5 +1,12 @@
 import streamlit as st
 import requests
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from the .env file
+load_dotenv()
+
+host_ip_address = os.getenv("HOST_IP_ADDRESS")
 
 def question_answer(access_token):
     st.title("OpenAI Chatbot")
@@ -20,7 +27,7 @@ def question_answer(access_token):
         if user_question:
             headers = {"Authorization": f"Bearer {access_token}"}
             data = {"forms": selected_forms, "question": user_question}
-            response = requests.post("http://localhost:8000/process_question", json=data, headers=headers)
+            response = requests.post(f"http://{host_ip_address}:8000/process_question", json=data, headers=headers)
 
             if response.status_code == 200:
                 answer = response.json().get("answer")

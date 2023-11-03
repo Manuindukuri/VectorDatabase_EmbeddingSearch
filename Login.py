@@ -1,5 +1,12 @@
 import streamlit as st
 import requests
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from the .env file
+load_dotenv()
+
+host_ip_address = os.getenv("HOST_IP_ADDRESS")
 
 # Streamlit UI
 st.title("Welcome to our Application")
@@ -14,7 +21,7 @@ def login():
             st.error("Username and password are required.")
         else:
             response = requests.post(
-                "http://localhost:8000/token",
+                f"http://{host_ip_address}:8000/token",
                 data={"username": login_username, "password": login_password},
             )
             if response.status_code == 200:

@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import jwt
-from jwt import PyJWTError
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, MetaData, Table
 from sqlalchemy.orm import Session
 from databases import Database
@@ -14,6 +13,9 @@ import os
 import logging
 from dotenv import load_dotenv
 
+# Import SequenceMatcher for text similarity
+from difflib import SequenceMatcher  
+
 #QA_Openai
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -22,6 +24,9 @@ import pinecone
 
 # Load environment variables from the .env file
 load_dotenv()
+
+# Initialize a dictionary to store previous questions and their answers
+previous_questions = {}
 
 # Environment Variables
 api_key = os.getenv("OPENAI_KEY")
@@ -92,6 +97,9 @@ Base.metadata.create_all(bind=engine)
 # Hashing password
 password_hash = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+# Initialize sessionmaker
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
 # User Pydantic model
 class User(BaseModel):
     username: str
@@ -139,8 +147,6 @@ def create_access_token(data, expires_delta):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 # OAuth2 password scheme for token generation
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -178,9 +184,35 @@ async def get_protected_data(current_user: User = Depends(oauth2_scheme)):
     return current_user
 
 # QA Processing
+
+# Function to find the most similar previous question
+def find_similar_previous_question(question):
+    max_similarity = 0
+    best_match_question = None
+
+    for prev_question in previous_questions.keys():
+        similarity = SequenceMatcher(None, question, prev_question).ratio()
+        if similarity > max_similarity:
+            max_similarity = similarity
+            best_match_question = prev_question
+
+    if max_similarity >= 0.85:
+        return best_match_question
+    else:
+        return None
+
 @app.post("/process_question")
 async def process_question(input_data: UserInput, current_user: User = Depends(oauth2_scheme)):
     try:
+        # Check for similar previous questions
+        similar_question = find_similar_previous_question(input_data.question)
+
+        if similar_question is not None:
+            # Retrieve the answer from the dictionary
+            similar_answer = previous_questions[similar_question]
+            return {"answer": similar_answer}
+
+        # If no similar previous question is found, continue with OpenAI processing
         embeddings = generate_answer(input_data.question)
 
         if isinstance(embeddings, str):
@@ -189,20 +221,19 @@ async def process_question(input_data: UserInput, current_user: User = Depends(o
         filter_condition = {"form_title": {"$in": input_data.forms}}
         results = index.query(embeddings, top_k=1, include_metadata=True, filter=filter_condition)
 
-        # Log important information
         logging.info(f"User Question: {input_data.question}")
         logging.info(f"Selected Forms: {input_data.forms}")
         logging.info(f"Embeddings: {embeddings}")
         logging.info(f"filter_condition: {filter_condition}")
         logging.info(f"results: {results}")
 
-        if results['matches'][0]['score'] < 0.75:
+        if results['matches'][0]['score'] < 0.74:
             return {"answer": "Your question is out of scope"}
 
         best_match_question = results['matches'][0]['metadata']['content']
 
         answer = openai.Completion.create(
-            engine="text-davinci-003",
+            engine="text-davinci-002",
             temperature=0.3,
             n=1,
             prompt=f"Answer the following question: {best_match_question}",
@@ -210,7 +241,9 @@ async def process_question(input_data: UserInput, current_user: User = Depends(o
         )
         logging.info(f"OpenAI Response: {answer}")
 
+        # Store the current question and its answer in the dictionary
+        previous_questions[input_data.question] = answer.choices[0].text
+
         return {"answer": answer.choices[0].text}
     except Exception as e:
         return {"error": str(e)}
-    
