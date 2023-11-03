@@ -14,7 +14,7 @@ global index
 def csv_to_dataframe():
 # Get the current working directory (where the DAG file is located)
     current_directory = os.path.dirname(os.path.abspath(__file__ or '.'))
-    csv_file_path = os.path.join(current_directory, "new_embeddings.csv")
+    csv_file_path = os.path.join(current_directory, "embeddings.csv")
     df = pd.read_csv(csv_file_path)
     df.insert(0, 'id', range(1, len(df) + 1))
     df['id'] = df['id'].apply(str)
@@ -28,7 +28,7 @@ def connect_to_pinecone():
     index_name = 'my-index'
     # Initialize Pinecone client
     pinecone.init(api_key='b4337a10-efc0-4747-8b3c-5469b1485320',      
-    environment='gcp-starter')     
+    environment='gcp-starter')   
     # Check whether the index with the same name already exists - if so, delete it
     if index_name in pinecone.list_indexes():
         pinecone.delete_index(index_name)
@@ -50,9 +50,11 @@ def upsert_data_to_pinecone(**kwargs):
         r_id = str(row['id'])
         embedding = row['embeddings']
         heading = row['heading']
+        content=row['pypdf_content']
 
         meta={
             'form_title':heading,
+            'content':content
         }
 
         index.upsert(vectors=[(r_id, embedding,meta)])
