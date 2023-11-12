@@ -19,7 +19,8 @@ Sarvesh Malpani | 002776061 | 33.33%
 - LiveApp - http://34.75.29.161:8501
 - Airflow - http://34.75.29.161:8080
 - Codelabs - https://codelabs-preview.appspot.com/?file_id=1D1rhMETWEnWB5HbrnLXo8uqPDJzaF3ZHa6dsZ0P6OKA#8
-- Demo of application - 
+- Demo of application - https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnortheastern.zoom.us%2Frec%2Fshare%2FvFoBen184Tyz3jNdnXsooxN97FUl4yb5fN8h6OZYHApAfTTtcOReUK4rNkNVUJoc.S3KBCFv9hsgSbbRg&data=05%7C01%7Cindukuri.k%40northeastern.edu%7Cd9785cea85c640a06a4208dbe315f8a0%7Ca8eec281aaa34daeac9b9a398b9215e7%7C0%7C0%7C638353455732030191%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=FQEWkYakhrjTxibkqNuXyx6aE37PJaK6uP9OuJtGvaU%3D&reserved=0
+- Password - ^VV7&jyj
 
 # Project Tree
 
