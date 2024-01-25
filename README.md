@@ -2,7 +2,19 @@
 
 # OPEN AI CHATBOT
 
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](https://streamlit.io/)
+[![FastAPI](https://img.shields.io/badge/fastapi-109989?style=for-the-badge&logo=FASTAPI&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Apache Airflow](https://img.shields.io/badge/Airflow-017CEE?style=for-the-badge&logo=Apache%20Airflow&logoColor=white)](https://airflow.apache.org/)
+[![Docker](https://img.shields.io/badge/Docker-%232496ED?style=for-the-badge&logo=Docker&color=blue&logoColor=white)](https://www.docker.com)
+[![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
+[![Amazon AWS](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-%23412991?style=for-the-badge&logo=OpenAI&logoColor=%23412991&color=red)](https://platform.openai.com/docs/api-reference/introduction)
+[![Postgres](https://img.shields.io/badge/Postgres-%234169E1?style=for-the-badge&logo=PostgreSQL&logoColor=%234169E1&color=black)](https://www.postgresql.org)
+[![Google Cloud](https://img.shields.io/badge/Google_Cloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)](https://cloud.google.com)
+
 OPEN AI CHATBOT is a comprehensive project that combines two distinct pipelines for data acquisition and embedding generation using Apache Airflow and a client-facing application built with Streamlit and FastAPI. The project addresses a real-world scenario where we extract data and metadata from PDF files and store them in Pinecone, a vector database for efficient embedding search to prompt in large language model. The project answers to the question asked by the user using the GPT-3.5 Turbo model.
+
+Documentation - https://codelabs-preview.appspot.com/?file_id=1D1rhMETWEnWB5HbrnLXo8uqPDJzaF3ZHa6dsZ0P6OKA#8
 
 ## Overview:
 
@@ -30,23 +42,6 @@ This application is built using Streamlit and deployed on a Streamlit Cloud Plat
 
 -**Ask:** Allows users to input queries and utilizes Pinecone's Similarity search for information retrieval. It also supports 
 filtering by form or querying across all items for comprehensive results. The model returns the answer to the query by using the GPT-3.5 Turbo model
-
-
-### Team Information and Contribution 
-
-Name | NUID | Contribution 
---- | --- | --- |
-Manohar Indukuri | 002774942 | 34% 
-Prathamesh Kulkarni | 001560684 | 33% 
-Sarvesh Malpani | 002776061 | 33% 
-
-# Links
-
-- LiveApp - http://34.75.29.161:8501
-- Airflow - http://34.75.29.161:8080
-- Codelabs - https://codelabs-preview.appspot.com/?file_id=1D1rhMETWEnWB5HbrnLXo8uqPDJzaF3ZHa6dsZ0P6OKA#8
-- Demo of application - https://nam12.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnortheastern.zoom.us%2Frec%2Fshare%2FvFoBen184Tyz3jNdnXsooxN97FUl4yb5fN8h6OZYHApAfTTtcOReUK4rNkNVUJoc.S3KBCFv9hsgSbbRg&data=05%7C01%7Cindukuri.k%40northeastern.edu%7Cd9785cea85c640a06a4208dbe315f8a0%7Ca8eec281aaa34daeac9b9a398b9215e7%7C0%7C0%7C638353455732030191%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=FQEWkYakhrjTxibkqNuXyx6aE37PJaK6uP9OuJtGvaU%3D&reserved=0
-- Password - ^VV7&jyj
 
 # Project Tree
 
